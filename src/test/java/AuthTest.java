@@ -20,23 +20,13 @@ public class AuthTest {
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
             .build();
-    private static RegistrationDto userActive = new RegistrationDto("active", "en");
-    private static RegistrationDto userBlocked = new RegistrationDto("blocked", "en");
 
-    @BeforeAll
-    static void setUpAll() {
+    private static void setUser(RegistrationDto user) {
 
         // сам запрос
         given() // "дано"
                 .spec(requestSpec) // указываем, какую спецификацию используем
-                .body(userActive) // передаём в теле объект, который будет преобразован в JSON
-                .when() // "когда"
-                .post("/api/system/users") // на какой путь относительно BaseUri отправляем запрос
-                .then() // "тогда ожидаем"
-                .statusCode(200); // код 200 OK
-        given() // "дано"
-                .spec(requestSpec) // указываем, какую спецификацию используем
-                .body(userBlocked) // передаём в теле объект, который будет преобразован в JSON
+                .body(user) // передаём в теле объект, который будет преобразован в JSON
                 .when() // "когда"
                 .post("/api/system/users") // на какой путь относительно BaseUri отправляем запрос
                 .then() // "тогда ожидаем"
@@ -47,8 +37,10 @@ public class AuthTest {
     public void authoTest1() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        $("span[data-test-id=login] input").setValue(this.userActive.getLogin());
-        $("span[data-test-id=password] input").setValue(this.userActive.getPassword());
+        RegistrationDto userActive = new RegistrationDto("active", "en");
+        setUser(userActive);
+        $("span[data-test-id=login] input").setValue(userActive.getLogin());
+        $("span[data-test-id=password] input").setValue(userActive.getPassword());
         $("[data-test-id=action-login]").click();
         $x("//*[contains(text(), 'Личный кабинет')]").shouldHave(Condition.text("Личный кабинет"));
     }
@@ -57,8 +49,10 @@ public class AuthTest {
     public void authoTest2() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        $("span[data-test-id=login] input").setValue(this.userBlocked.getLogin());
-        $("span[data-test-id=password] input").setValue(this.userBlocked.getPassword());
+        RegistrationDto userBlocked = new RegistrationDto("blocked", "en");
+        setUser(userBlocked);
+        $("span[data-test-id=login] input").setValue(userBlocked.getLogin());
+        $("span[data-test-id=password] input").setValue(userBlocked.getPassword());
         $("button[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").shouldHave(Condition.text("Пользователь заблокирован"));
     }
@@ -67,8 +61,10 @@ public class AuthTest {
     public void authoTest3() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        $("span[data-test-id=login] input").setValue(this.userActive.getLogin() + "1");
-        $("span[data-test-id=password] input").setValue(this.userActive.getPassword());
+        RegistrationDto userActive = new RegistrationDto("active", "en");
+        setUser(userActive);
+        $("span[data-test-id=login] input").setValue(userActive.getLogin() + "1");
+        $("span[data-test-id=password] input").setValue(userActive.getPassword());
         $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").shouldHave(Condition.text("Ошибка!")).shouldHave(Condition.text("Неверно указан логин или пароль"));
     }
@@ -77,8 +73,10 @@ public class AuthTest {
     public void authoTest4() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        $("span[data-test-id=login] input").setValue(this.userActive.getLogin());
-        $("span[data-test-id=password] input").setValue(this.userActive.getPassword() + "P");
+        RegistrationDto userActive = new RegistrationDto("active", "en");
+        setUser(userActive);
+        $("span[data-test-id=login] input").setValue(userActive.getLogin());
+        $("span[data-test-id=password] input").setValue(userActive.getPassword() + "P");
         $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification]").shouldHave(Condition.text("Ошибка!")).shouldHave(Condition.text("Неверно указан логин или пароль"));
     }
@@ -87,7 +85,9 @@ public class AuthTest {
     public void authoTest5() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        $("span[data-test-id=login] input").setValue(this.userActive.getLogin());
+        RegistrationDto userActive = new RegistrationDto("active", "en");
+        setUser(userActive);
+        $("span[data-test-id=login] input").setValue(userActive.getLogin());
         $("[data-test-id=action-login]").click();
         $x("//*[contains(@class,'input__sub')]").shouldHave(Condition.text("Поле обязательно для заполнения"));
     }

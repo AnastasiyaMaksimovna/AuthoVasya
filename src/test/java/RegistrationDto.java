@@ -3,9 +3,9 @@ import com.github.javafaker.Faker;
 import java.util.Locale;
 
 public class RegistrationDto {
-    String login;
-    String password;
-    String status;
+    private String login;
+    private String password;
+    private String status;
 
     public RegistrationDto(String login, String password, String status) {
         this.login = login;
