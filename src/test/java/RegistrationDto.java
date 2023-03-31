@@ -13,12 +13,6 @@ public class RegistrationDto {
         this.status = status;
     }
 
-    public RegistrationDto(String status, String locale) {
-        this.status = status;
-        Faker faker = new Faker(new Locale(locale));
-        this.login = faker.name().fullName();
-        this.password = faker.pokemon().name();
-    }
 
     public String getLogin() {
         return login;

@@ -37,7 +37,7 @@ public class AuthTest {
     public void authoTest1() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        RegistrationDto userActive = new RegistrationDto("active", "en");
+        RegistrationDto userActive = DataGenerator.registrationDto("active", "en");
         setUser(userActive);
         $("span[data-test-id=login] input").setValue(userActive.getLogin());
         $("span[data-test-id=password] input").setValue(userActive.getPassword());
@@ -49,7 +49,7 @@ public class AuthTest {
     public void authoTest2() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        RegistrationDto userBlocked = new RegistrationDto("blocked", "en");
+        RegistrationDto userBlocked = DataGenerator.registrationDto("blocked", "en");
         setUser(userBlocked);
         $("span[data-test-id=login] input").setValue(userBlocked.getLogin());
         $("span[data-test-id=password] input").setValue(userBlocked.getPassword());
@@ -61,7 +61,7 @@ public class AuthTest {
     public void authoTest3() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        RegistrationDto userActive = new RegistrationDto("active", "en");
+        RegistrationDto userActive = DataGenerator.registrationDto("active", "en");
         setUser(userActive);
         $("span[data-test-id=login] input").setValue(userActive.getLogin() + "1");
         $("span[data-test-id=password] input").setValue(userActive.getPassword());
@@ -73,7 +73,7 @@ public class AuthTest {
     public void authoTest4() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        RegistrationDto userActive = new RegistrationDto("active", "en");
+        RegistrationDto userActive = DataGenerator.registrationDto("active", "en");
         setUser(userActive);
         $("span[data-test-id=login] input").setValue(userActive.getLogin());
         $("span[data-test-id=password] input").setValue(userActive.getPassword() + "P");
@@ -85,7 +85,7 @@ public class AuthTest {
     public void authoTest5() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
-        RegistrationDto userActive = new RegistrationDto("active", "en");
+        RegistrationDto userActive = DataGenerator.registrationDto("active", "en");
         setUser(userActive);
         $("span[data-test-id=login] input").setValue(userActive.getLogin());
         $("[data-test-id=action-login]").click();
